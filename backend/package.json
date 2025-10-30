@@ -1,0 +1,20 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "the backend of image gallery",
+  "license": "ISC",
+  "author": "Himanshu",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon src/index.js"
+  },
+  "dependencies": {
+    "cloudinary": "^2.8.0",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "mongoose": "^8.19.2",
+    "multer": "^2.0.2",
+    "nodemon": "^3.1.10"
+  }
+}
