@@ -55,4 +55,37 @@ export const createAlbum = async (req, res) => {
 };
 
 // 2. get the album
+export const getAlbum = async (req, res) => {
+    const {album_id} = req.params;
+
+    if (!album_id) {
+        return res.status(400).json({
+            message: "Id not found"
+        })
+    }
+
+    try {
+        const album = await Album.findById(album_id);
+
+        if (!album) {
+            return res.status(400).json({
+                success: false,
+                message: "Album not found"
+            })
+        }
+
+        res.status(200).json({
+            success: true,
+            message: "Album get",
+            album_data: album
+        })
+    } catch (error) {
+        console.error("Error getting album: ", error);
+        res.status(500).json({
+            success: false,
+            message: "Error getting album"
+        })
+    }
+};
+
 // 3. store the images in the album
