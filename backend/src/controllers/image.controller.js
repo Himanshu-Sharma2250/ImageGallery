@@ -58,6 +58,7 @@ export const uploadImage = async (req, res) => {
             success: true,
             message: "Image uploaded successfully",
             imageData: {
+                imageId: new_image._id,
                 name: req.file.originalname,
                 url: imageDetail.secure_url,
                 width: imageDetail.width,
@@ -76,3 +77,43 @@ export const uploadImage = async (req, res) => {
 };
 
 // 2. get the image to show the user
+export const getImage = async (req, res) => {
+    try {
+        const {imageId} = req.params;
+
+        if (!imageId) {
+            return res.status(400).json({
+                message: "image id not found"
+            })
+        }
+
+        const image = await Image.findById(imageId);
+
+        if (!image) {
+            return res.status(400).json({
+                success: false,
+                message: "Image not found"
+            })
+        }
+
+        res.status(200).json({
+            success: true,
+            message: "Image found",
+            imageData: {
+                imageId: image._id,
+                name: image.name,
+                url: image.image_url,
+                width: image.width,
+                height: image.height,
+                format: image.format,
+                createdAt: image.createdAt
+            }
+        });
+    } catch (error) {
+        console.error("Error getting image: ", error);
+        res.status(500).json({
+            success: false,
+            message: "Error getting image"
+        })
+    }
+};
