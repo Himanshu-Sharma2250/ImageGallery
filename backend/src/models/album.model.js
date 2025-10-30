@@ -1,11 +1,6 @@
 import mongoose, {Schema} from "mongoose";
 
 const albumSchema = new Schema({
-    imageId: {
-        type: Schema.Types.ObjectId,
-        ref: "Image",
-        required: true
-    },
     name: {
         type: String,
         required: true,

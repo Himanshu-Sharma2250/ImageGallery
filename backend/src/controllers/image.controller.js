@@ -106,6 +106,7 @@ export const getImage = async (req, res) => {
                 width: image.width,
                 height: image.height,
                 format: image.format,
+                album_id: image.album_id | "",
                 createdAt: image.createdAt
             }
         });
