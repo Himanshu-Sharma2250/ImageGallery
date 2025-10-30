@@ -16,4 +16,4 @@ connect_db();
 
 app.listen(port, () => {
   console.log(`App listening on port ${port}`)
-})
+});
