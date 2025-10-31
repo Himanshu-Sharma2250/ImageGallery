@@ -1,5 +1,5 @@
 import { Image } from "../models/image.model";
-import { uploadOnCloudinary } from "../utils/cloudinary";
+import { deleteImageFromCloudinary, uploadOnCloudinary } from "../utils/cloudinary";
 
 // 1. upload the image 
 export const uploadImage = async (req, res) => {
@@ -129,9 +129,25 @@ export const deleteImage = async (req, res) => {
     }
 
     try {
-        const image = await Image.findByIdAndDelete(imageId);
+        const image = await Image.findById(imageId);
 
         if (!image) {
+            return res.status(404).json({
+                success: false,
+                message: "Image not found"
+            })
+        }
+
+        const deleteFromCloudinary = await deleteImageFromCloudinary(image.cloudinary_public_id);
+
+        if (!deleteFromCloudinary) {
+            console.error("Image not deleted from cloudinary");
+            return;
+        }
+
+        const deletedImage = await Image.findByIdAndDelete(imageId);
+
+        if (!deletedImage) {
             return res.status(404).json({
                 success: false,
                 message: "Image not found"
