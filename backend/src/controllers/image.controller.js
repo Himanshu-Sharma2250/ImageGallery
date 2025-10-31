@@ -118,3 +118,35 @@ export const getImage = async (req, res) => {
         })
     }
 };
+
+export const deleteImage = async (req, res) => {
+    const {imageId} = req.params;
+
+    if (!imageId) {
+        return res.status(400).json({
+            message: "Image id not found"
+        })
+    }
+
+    try {
+        const image = await Image.findByIdAndDelete(imageId);
+
+        if (!image) {
+            return res.status(404).json({
+                success: false,
+                message: "Image not found"
+            })
+        }
+
+        res.status(200).json({
+            success: true,
+            message: "Image deleted successfully"
+        })
+    } catch (error) {
+        console.error("Error deleting image: ", error);
+        res.status(500).json({
+            success: false,
+            message: "Error deleting image"
+        })
+    }
+};
