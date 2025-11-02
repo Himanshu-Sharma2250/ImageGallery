@@ -1,6 +1,11 @@
 import mongoose, {Schema} from "mongoose";
 
 const imageSchema = new Schema({
+    userId: {
+        type: Number,
+        default: 1,
+        unique: true
+    },
     name: {
         type: String
     },

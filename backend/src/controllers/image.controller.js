@@ -119,6 +119,33 @@ export const getImage = async (req, res) => {
     }
 };
 
+export const getAllImages = async (req, res) => {
+    try {
+        const images = await Image.find({
+            userId: 1
+        });
+
+        if (images.length === 0) {
+            return res.status(404).json({
+                success: false,
+                message: "Images not found"
+            })
+        }
+
+        res.status(200).json({
+            success: true,
+            message: "All Images: ",
+            images
+        })
+    } catch (error) {
+        console.error("Error getting all images: ", error);
+        res.status(500).json({
+            success: false,
+            message: "Error getting all images"
+        })
+    }
+};
+
 export const deleteImage = async (req, res) => {
     const {imageId} = req.params;
 
