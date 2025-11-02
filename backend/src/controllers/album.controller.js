@@ -180,3 +180,35 @@ export const addImagesInAlbum = async (req, res) => {
         })
     }
 }; 
+
+export const deleteAlbum = async (req, res) => {
+    const {albumId} = req.params;
+
+    if (!albumId) {
+        return res.status(400).json({
+            message: "Album Id not present"
+        })
+    }
+
+    try {
+        const deletedAlbum = await Album.findByIdAndDelete(albumId);
+
+        if (!deleteAlbum) {
+            return res.status(404).json({
+                success: false,
+                message: "album not found"
+            })
+        }
+
+        res.status(200).json({
+            success: true,
+            message: "Album deleted successfully"
+        })
+    } catch (error) {
+        console.error("Error deleting album: ", error);
+        res.status(500).json({
+            success: false,
+            message: "Error deleting album"
+        })
+    }
+};
