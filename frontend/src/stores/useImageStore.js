@@ -2,17 +2,19 @@ import { create } from "zustand";
 import { axiosInstance } from "../libs/axios";
 
 const useImageStore = create((set) => ({
+    images: [],
     uploadedImageDetail: null,
     imageDetail: null,
     isUploadingImage: false,
     isGettingImage: false,
+    isGettingAllImages: false,
     isDeletingImage: false,
 
     upload: async () => {
         set({isUploadingImage: true});
 
         try {
-            const response = await axiosInstance.post("/upload");
+            const response = await axiosInstance.post("image/upload");
             set({uploadedImageDetail: response.data});
 
             return true;
@@ -30,9 +32,9 @@ const useImageStore = create((set) => ({
         set({isGettingImage: true});
 
         try {
-            const response = await axiosInstance.get("/", {
+            const response = await axiosInstance.get("image/", {
                 params: {
-                    id: imageId
+                    imageId: imageId
                 }
             })
             set({imageDetail: response.data});
@@ -48,11 +50,29 @@ const useImageStore = create((set) => ({
         }
     },
 
+    getAllImages: async () => {
+        set({isGettingAllImages: true});
+
+        try {
+            const response = await axiosInstance.get("image/all-images");
+            set({images: response.data});
+
+            return true;
+        } catch (error) {
+            console.error("Error getting all images: ", error);
+            set({images: []});
+
+            return false;
+        } finally {
+            set({isGettingAllImages: false});
+        }
+    },
+
     deleteImage: async (imageId) => {
         set({isDeletingImage: true});
 
         try {
-            const response = await axiosInstance.delete(`/${imageId}`);
+            const response = await axiosInstance.delete(`image/${imageId}`);
             set({imageDetail: null});
 
             return true;
