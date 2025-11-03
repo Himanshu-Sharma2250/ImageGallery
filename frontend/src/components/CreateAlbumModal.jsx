@@ -1,6 +1,36 @@
-import React from 'react'
+import { useForm } from "react-hook-form";
+import toast from 'react-hot-toast';
+import {Loader2} from "lucide-react";
+
+import { useAlbumStore } from "../stores/useAlbumStore";
 
 const CreateAlbumModal = () => {
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm({
+        defaultValues: {
+            name: "",
+            description: ""
+        }
+    })
+
+    const {isCreatingAlbum, createAlbum} = useAlbumStore();
+
+    const on_submit = async (data) => {
+        const result = await createAlbum(data);
+        
+        document.getElementById("albumForm").reset(); // to reset the default values of input to ""
+
+        if (result) {
+            toast.success(`Album ${data.name} created successfully`);
+        }
+        else {
+            toast.error("Failed to create album");
+        }
+    };
+
     return (
         <div className='w-fit'>
             <button className="btn rounded-xl" onClick={()=>document.getElementById('my_modal_1').showModal()}>
@@ -14,18 +44,24 @@ const CreateAlbumModal = () => {
                     </h3>
 
                     <div className='flex items-center justify-center'>
-                        <fieldset className="fieldset border-base-300 rounded-box w-xs p-4">
-                            <label className="label">Name</label>
-                            <input type="text" className="input" placeholder="Enter album name" />
+                        <form onSubmit={handleSubmit(on_submit)} id="albumForm">
+                            <fieldset className="fieldset border-base-300 rounded-box w-xs p-4">
+                                <label className="label">Name</label>
+                                <input type="text" {...register('name')}  className="input" placeholder="Enter album name" />
 
-                            <label className="label">Desciption</label>
-                            <textarea className="textarea" placeholder="Enter desciption (optional)"></textarea>
+                                <label className="label">Desciption</label>
+                                <textarea {...register("description")}  className="textarea" placeholder="Enter desciption (optional)"></textarea>
 
-                            {/* button to submit and to close it when submitted */}
-                            <button className="btn btn-neutral mt-4" onClick={() => {document.getElementById('my_modal_1').close()}}>
-                                Submit
-                            </button>
-                        </fieldset>
+                                {/* button to submit and to close it when submitted */}
+                                <button className="btn btn-neutral mt-4" type="submit" onClick={() => {document.getElementById('my_modal_1').close()}}>
+                                    {isCreatingAlbum === true ? (
+                                        <Loader2 className="w-4 animate-spin" />
+                                    ) : (
+                                        "Submit"
+                                    )}
+                                </button>
+                            </fieldset>
+                        </form>
                     </div>
                 </div>
 

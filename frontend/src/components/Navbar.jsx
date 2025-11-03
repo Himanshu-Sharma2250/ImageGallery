@@ -14,12 +14,11 @@ const Navbar = () => {
             <a className="btn btn-ghost text-xl">Image Gallery</a>
         </div>
         <div className="flex gap-1">
-            <button className="">
+            
                 <CreateAlbumModal />
-            </button>
-            <button className="">
+           
                 <UploadImageModal />
-            </button>
+            
         </div>
     </div>
   )

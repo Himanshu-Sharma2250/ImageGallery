@@ -11,7 +11,7 @@ const UploadImageModal = () => {
                         Upload Image
                     </h3>
                     
-                    <form className='flex flex-col gap-2'>
+                    <form className='flex flex-col gap-2' encType="multipart/form-data">
                         <input type="file" className="file-input w-full" />
 
                         <button className='btn btn-ghost'>

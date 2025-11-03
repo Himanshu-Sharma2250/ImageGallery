@@ -17,7 +17,8 @@ export const useAlbumStore = create((set) => ({
         try {
             const response = await axiosInstance.post("album/create-album", body);
             set({createdAlbumDetail: response.data});
-
+            
+            console.log("method called: ", response);
             return true;
         } catch (error) {
             console.error("Error creating album: ", error);
