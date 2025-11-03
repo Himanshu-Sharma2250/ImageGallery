@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
-import { Album } from "../models/album.model";
-import { Image } from "../models/image.model";
+import { Album } from "../models/album.model.js";
+import { Image } from "../models/image.model.js";
 
 // 1. create the album
 export const createAlbum = async (req, res) => {

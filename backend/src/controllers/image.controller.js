@@ -1,5 +1,5 @@
-import { Image } from "../models/image.model";
-import { deleteImageFromCloudinary, uploadOnCloudinary } from "../utils/cloudinary";
+import { Image } from "../models/image.model.js";
+import { deleteImageFromCloudinary, uploadOnCloudinary } from "../utils/cloudinary.js";
 
 // 1. upload the image 
 export const uploadImage = async (req, res) => {
