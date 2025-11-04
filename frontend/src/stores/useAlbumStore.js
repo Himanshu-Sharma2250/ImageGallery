@@ -34,7 +34,7 @@ export const useAlbumStore = create((set) => ({
         set({isGettingAlbum: true});
 
         try {
-            const response = await axiosInstance.get("album/", {
+            const response = await axiosInstance.get("album/get-album/", {
                 params: {
                     albumId: albumId
                 }
@@ -58,6 +58,8 @@ export const useAlbumStore = create((set) => ({
         try {
             const response = await axiosInstance.get("album/all-albums");
             set({albums: response.data});
+
+            console.log("Albums data: ", response.data);
 
             return true;
         } catch (error) {

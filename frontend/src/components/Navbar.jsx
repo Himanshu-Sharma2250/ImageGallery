@@ -15,9 +15,9 @@ const Navbar = () => {
         </div>
         <div className="flex gap-1">
             
-                <CreateAlbumModal />
+            <CreateAlbumModal />
            
-                <UploadImageModal />
+            <UploadImageModal />
             
         </div>
     </div>
