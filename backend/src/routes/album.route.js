@@ -4,7 +4,7 @@ import { createAlbum, deleteAlbum, getAlbum, getAllAlbums } from "../controllers
 const albumRouter = express.Router();
 
 albumRouter.post("/create-album", createAlbum);
-albumRouter.get("/:id", getAlbum);
+albumRouter.get("/get-album/:id", getAlbum);
 albumRouter.get("/all-albums", getAllAlbums);
 albumRouter.patch("/:id/add-images", getAlbum);
 albumRouter.delete("/:id", deleteAlbum);
