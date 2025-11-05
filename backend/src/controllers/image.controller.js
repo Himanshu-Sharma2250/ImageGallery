@@ -4,12 +4,12 @@ import { deleteImageFromCloudinary, uploadOnCloudinary } from "../utils/cloudina
 // 1. upload the image 
 export const uploadImage = async (req, res) => {
     // the image is stored in req.file
+    console.log("The file in req is : ", req.file);
     if (!req.file) {
         return res.status(404).json({
             message: "image not found"
         })
     }
-    console.log("The file in req is : ", req.file);
 
     try {
         const imageDetail = await uploadOnCloudinary(req.file.path);
@@ -21,7 +21,7 @@ export const uploadImage = async (req, res) => {
             })
         }
 
-        const image = await Image.findById({
+        const image = await Image.findOne({
             cloudinary_public_id: imageDetail.public_id
         })
 
@@ -43,7 +43,7 @@ export const uploadImage = async (req, res) => {
 
         await new_image.save();
 
-        const existingImage = await Image.findById({
+        const existingImage = await Image.findOne({
             cloudinary_public_id: imageDetail.public_id
         });
 
