@@ -57,7 +57,7 @@ export const useAlbumStore = create((set) => ({
 
         try {
             const response = await axiosInstance.get("album/all-albums");
-            set({albums: response.data});
+            set({albums: response.data.albums});
 
             console.log("Albums data: ", response.data);
 

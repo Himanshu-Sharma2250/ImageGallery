@@ -11,7 +11,7 @@ const Tabs = () => {
             </div>
 
             <input type="radio" name="my_tabs_3" className="tab" aria-label="Albums" />
-            <div className="tab-content bg-base-100 border-base-300 p-6">
+            <div className="tab-content bg-base-100 border-base-300 p-6 h-[90vh]">
                 <AlbumDisplayArea />
             </div>
         </div>
