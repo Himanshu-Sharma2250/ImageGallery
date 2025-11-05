@@ -10,11 +10,11 @@ const useImageStore = create((set) => ({
     isGettingAllImages: false,
     isDeletingImage: false,
 
-    upload: async () => {
+    upload: async (formData) => {
         set({isUploadingImage: true});
 
         try {
-            const response = await axiosInstance.post("image/upload");
+            const response = await axiosInstance.post("image/upload", formData);
             set({uploadedImageDetail: response.data});
 
             return true;
@@ -54,8 +54,8 @@ const useImageStore = create((set) => ({
         set({isGettingAllImages: true});
 
         try {
-            const response = await axiosInstance.get("image/all-images");
-            set({images: response.data});
+            const response = await axiosInstance.get("image/get-image/all-images");
+            set({images: response.data.images});
 
             return true;
         } catch (error) {
