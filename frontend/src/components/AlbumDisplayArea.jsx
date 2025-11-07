@@ -1,10 +1,13 @@
 import React, { useEffect } from 'react'
-import { useAlbumStore } from '../stores/useAlbumStore';
 import toast from 'react-hot-toast';
 import {Loader2} from "lucide-react";
+import {useNavigate} from "@tanstack/react-router";
+
+import { useAlbumStore } from '../stores/useAlbumStore';
 
 const AlbumDisplayArea = () => {
-    const {albums, isGettingAllAlbums, getAllAlbums} = useAlbumStore();
+    const {albums, isGettingAllAlbums, getAllAlbums, getAlbum} = useAlbumStore();
+    const navigate = useNavigate({ from: '/album/$id' })
 
     useEffect(() => {
         const fetchAlbums = async () => {
@@ -21,7 +24,7 @@ const AlbumDisplayArea = () => {
 
     const album = (album) => {
         // album = albums[0]=>object -> albums.albums
-        return <div className='h-60 w-52 border-2 p-2 mr-5 rounded-xl cursor-pointer' key={album._id}>
+        return <div className='h-60 w-52 border-2 p-2 mr-5 rounded-xl cursor-pointer' key={album._id} data-key={album._id} onClick={clickOnAlbum}>
                 {/* contain the album cover */}
             <div className='flex justify-center items-center h-[90%] w-full border-0'>
                 <span>
@@ -40,6 +43,17 @@ const AlbumDisplayArea = () => {
                 </span>
             </div>
         </div>
+    }
+
+    const clickOnAlbum = async (e) => {
+        const albumId = e.currentTarget.getAttribute('data-key');
+        // console.log("album id : ", albumId);
+        console.log("i am clicking on album")
+        const result = await getAlbum(albumId);
+
+        if (result) {
+            navigate({to:"/album/$id", params:{id:`${albumId}`}});
+        }
     }
     
     console.log("Albums: ", albums);

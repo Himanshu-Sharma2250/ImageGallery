@@ -38,7 +38,7 @@ const ImageDisplayArea = () => {
     }
 
     const createImages = (image) => {
-        return <div>
+        return <div key={image._id} data-key={image._id}>
             <img src={image.image_url} className='h-40 w-32 rounded-xl' />
         </div>
     }

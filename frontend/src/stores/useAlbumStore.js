@@ -30,15 +30,11 @@ export const useAlbumStore = create((set) => ({
         }
     },
 
-    getAlbum: async (albumId) => {
+    getAlbum: async (album_id) => {
         set({isGettingAlbum: true});
 
         try {
-            const response = await axiosInstance.get("album/get-album/", {
-                params: {
-                    albumId: albumId
-                }
-            });
+            const response = await axiosInstance.get(`album/get-album/${album_id}`);
             set({albumDetail: response.data});
 
             return true;
