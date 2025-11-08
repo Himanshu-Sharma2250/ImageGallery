@@ -1,5 +1,6 @@
 import toast from "react-hot-toast";
 import {useForm} from "react-hook-form";
+import {Loader2} from "lucide-react"
 
 import useImageStore from '../stores/useImageStore';
 
@@ -16,13 +17,6 @@ const UploadImageModal = () => {
         formData.append('image', file); 
         
         const result = await upload(formData);
-
-        if (result) {
-            toast.success("Image uploaded successfully");
-        }
-        else {
-            toast.error("Unable to upload image");
-        }
     }
 
     console.log("IMage detail : ", uploadedImageDetail);
@@ -41,7 +35,11 @@ const UploadImageModal = () => {
                         <input type="file" className="file-input w-full" name='image' />
 
                         <button className='btn btn-ghost' type="submit">
-                            Upload
+                            {isUploadingImage ? (
+                                <Loader2 className="w-4 animate-spin"/>
+                            ) : (
+                                "Upload Image"
+                            )}
                         </button>
                     </form>
                 </div>

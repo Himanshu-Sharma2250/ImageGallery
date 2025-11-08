@@ -68,11 +68,13 @@ export const useAlbumStore = create((set) => ({
         }
     },
 
-    addingImageInAlbum: async (imageId, albumId) => {
+    addingImageInAlbum: async (imageIds, albumId) => {
         set({isAddingImageInAlbum: true});
+        console.log("image id : store: ", imageIds);
+        console.log("album id : store: ", albumId);
 
         try {
-            const response = await axiosInstance.patch(`album/${albumId}/add-images`);
+            const response = await axiosInstance.patch(`album/${albumId}/add-images`, {imageIds});
             set({albumDetail: response.data});
 
             return true;
@@ -85,11 +87,11 @@ export const useAlbumStore = create((set) => ({
         }
     },
 
-    deleteAlbum: async (albumId) => {
+    deleteAlbum: async (album_id) => {
         set({isDeletingAlbum: true});
 
         try {
-            const response = await axiosInstance.delete();
+            const response = await axiosInstance.delete(`album/${album_id}`);
             set({albumDetail: null});
 
             return true;
