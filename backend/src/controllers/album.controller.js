@@ -117,19 +117,25 @@ export const getAllAlbums = async (req, res) => {
     }
 };
 
-// 3. store the images in the album
+// 4. store the images in the album
 export const addImagesInAlbum = async (req, res) => {
-    const {albumId} = req.params;
+    const {album_id} = req.params;
     const {imageIds} = req.body;
 
-    if (!imageIds | !albumId) {
+    console.log("image id in controller body : ", imageIds)
+
+    if (!Array.isArray(imageIds)) {
+        return res.status(400).json({ error: "imageIds must be an array" });
+    }
+
+    if (imageIds.length === 0 | !album_id) {
         return res.status(400).json({
             message: "ImageId or AlbumId not found"
         })
     }
 
     try {
-        const ids = imageIds.map(id => mongoose.Types.ObjectId(id)); // convert string in object
+        const ids = imageIds.map(id => new mongoose.Types.ObjectId(id)); // convert string in object
         console.log("The ids in body: ", ids);
 
         const isImagesExist = await Image.find({
@@ -143,7 +149,7 @@ export const addImagesInAlbum = async (req, res) => {
             })
         }
 
-        const isAlbumExists = await Album.findById(albumId);
+        const isAlbumExists = await Album.findById(album_id);
 
         if (!isAlbumExists) {
             return res.status(400).json({
@@ -152,7 +158,7 @@ export const addImagesInAlbum = async (req, res) => {
             })
         }
 
-        const addingImages = await Album.findByIdAndUpdate(albumId, {
+        const addingImages = await Album.findByIdAndUpdate(album_id, {
             $addToSet: {
                 images: {
                     $each: ids
@@ -182,16 +188,16 @@ export const addImagesInAlbum = async (req, res) => {
 }; 
 
 export const deleteAlbum = async (req, res) => {
-    const {albumId} = req.params;
+    const {album_id} = req.params;
 
-    if (!albumId) {
+    if (!album_id) {
         return res.status(400).json({
             message: "Album Id not present"
         })
     }
 
     try {
-        const deletedAlbum = await Album.findByIdAndDelete(albumId);
+        const deletedAlbum = await Album.findByIdAndDelete(album_id);
 
         if (!deleteAlbum) {
             return res.status(404).json({
