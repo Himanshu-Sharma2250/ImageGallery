@@ -5,8 +5,8 @@ import { upload } from "../middlewares/multer.middleware.js";
 const imageRouter = express.Router();
 
 imageRouter.post("/upload", upload.single('image'), uploadImage);
-imageRouter.get("/:id", getImage);
+imageRouter.get("/:imageId", getImage);
 imageRouter.get("/get-image/all-images", getAllImages);
-imageRouter.delete("/:id", deleteImage);
+imageRouter.delete("/:imageId", deleteImage);
 
 export default imageRouter;

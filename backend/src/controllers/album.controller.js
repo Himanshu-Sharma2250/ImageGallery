@@ -60,7 +60,7 @@ export const createAlbum = async (req, res) => {
 export const getAlbum = async (req, res) => {
     const {album_id} = req.params;
 
-    if (!album_id) {
+    if (!album_id || !mongoose.Types.ObjectId.isValid(album_id)) {
         return res.status(400).json({
             message: "Id not found"
         })
@@ -172,6 +172,15 @@ export const addImagesInAlbum = async (req, res) => {
                 message: "Insertion of Images failed"
             })
         }
+
+        await Image.updateMany(
+            {_id: {
+                $in: ids
+            }},
+            {$set: {
+                album_id: album_id
+            }}
+        )
 
         res.status(200).json({
             success: true,
