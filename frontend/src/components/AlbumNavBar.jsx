@@ -5,14 +5,14 @@ import AddImagesInAlbumModal from "./AddImagesInAlbumModal";
 
 const AlbumNavBar = () => {
     const {albumDetail, deleteAlbum, isDeletingAlbum} = useAlbumStore();
-    const album_data = albumDetail.album_data
+    const album_data = albumDetail?.album_data
 
     const navigate = useNavigate({ from: '/album/$id' });
 
     console.log("album detail in other pafe: ", album_data);
 
     const delete_album = async () => {
-        const albumId = album_data._id;
+        const albumId = album_data?._id;
         const result = await deleteAlbum(albumId);
 
         if (result) {
@@ -33,7 +33,7 @@ const AlbumNavBar = () => {
 
                 <div className="">
                     <a className="btn btn-ghost text-xl">
-                        {album_data.name}
+                        {album_data?.name}
                     </a>
                 </div>
             </div>

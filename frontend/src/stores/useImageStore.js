@@ -32,11 +32,7 @@ const useImageStore = create((set) => ({
         set({isGettingImage: true});
 
         try {
-            const response = await axiosInstance.get("image/", {
-                params: {
-                    imageId: imageId
-                }
-            })
+            const response = await axiosInstance.get(`image/${imageId}`)
             set({imageDetail: response.data});
 
             return true;
