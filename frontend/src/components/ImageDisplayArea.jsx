@@ -3,11 +3,13 @@ import toast from 'react-hot-toast';
 import {Loader2} from "lucide-react";
 
 import useImageStore from '../stores/useImageStore';
+import { useAlbumStore } from '../stores/useAlbumStore';
 
 const ImageDisplayArea = () => {
     const [monthYear, setMonthYear] = useState(""); // will contain the month and year of the image that is uploaded
 
-    const {images, isGettingAllImages, getAllImages, getImage, isGettingImage, imageDetail} = useImageStore();
+    const {images, isGettingAllImages, getAllImages, getImage, isGettingImage, imageDetail, deleteImage, isDeletingImage} = useImageStore();
+    const {removeImageFromAlbum} = useAlbumStore();
 
     useEffect(() => {
         const fetchImages = async () => {
@@ -69,6 +71,19 @@ const ImageDisplayArea = () => {
         return name?.slice(0, -4);
     }
 
+    const delete_image = async () => {
+        console.log("Image id to pass in delete image : ", imageDetail?.imageData.imageId);
+        const res = await removeImageFromAlbum(imageDetail?.imageData.album_id, imageDetail?.imageData.imageId);
+        const result = await deleteImage(imageDetail?.imageData.imageId);
+
+        if (result && res) {
+            document.getElementById("show_image_modal").close();
+        }
+        else {
+            toast.error("Error deleting image");
+        }
+    }
+
     return (
         <div className='h-full w-full flex '>
             {images.length === 0 ? (
@@ -86,19 +101,32 @@ const ImageDisplayArea = () => {
             <dialog id="show_image_modal" className="modal">
                 <div className="modal-box w-11/12 max-w-5xl flex gap-1.5 p-2.5">
                     <div className=''>
-                        <img src={imageDetail?.imageData.url} alt={imageDetail?.imageData.name} className={`h-[${imageDetail?.imageData.height}px] w-[${imageDetail?.imageData.width}px]`} />
+                        <img src={imageDetail?.imageData.url} alt={imageDetail?.imageData.name} className={`h-full`} />
                     </div>
 
-                    <div className='flex flex-col gap-0.5'>
-                        <h2>
-                            Name: {showName(imageDetail?.imageData.name)}
-                        </h2>
-                        <span>
-                            Upload Time: {showTime(imageDetail?.imageData.createdAt)}
-                        </span>
-                        <span>
-                            Upload Date: {showDate(imageDetail?.imageData.createdAt)}
-                        </span>
+                    <div className='flex flex-col justify-between'>
+                        {/* show image detail */}
+                        <div className='flex flex-col gap-0.5'>
+                            <h2>
+                                Name: {showName(imageDetail?.imageData.name)}
+                            </h2>
+                            <span>
+                                Upload Time: {showTime(imageDetail?.imageData.createdAt)}
+                            </span>
+                            <span>
+                                Upload Date: {showDate(imageDetail?.imageData.createdAt)}
+                            </span>
+                        </div>
+                        {/* delete image */}
+                        <div className='flex items-center justify-end'>
+                            <button className='btn btn-error' onClick={delete_image}>
+                                {isDeletingImage ? (
+                                    <Loader2 className='w-4 animate-spin' />
+                                ) : (
+                                    "Delete"
+                                )}
+                            </button>
+                        </div>
                     </div>
                 </div>
 

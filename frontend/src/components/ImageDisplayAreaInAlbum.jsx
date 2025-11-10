@@ -2,9 +2,10 @@ import React, { useEffect } from 'react'
 import { useAlbumStore } from '../stores/useAlbumStore';
 import toast from 'react-hot-toast';
 import useImageStore from '../stores/useImageStore';
+import { Loader2 } from 'lucide-react';
 
 const ImageDisplayAreaInAlbum = () => {
-    const {albumDetail, getAlbum} = useAlbumStore();
+    const {albumDetail, getAlbum, removeImageFromAlbum, isRemovingImage} = useAlbumStore();
     const album_data = albumDetail?.album_data;
     const {getImage, isGettingImage, imageDetail} = useImageStore();
 
@@ -51,6 +52,17 @@ const ImageDisplayAreaInAlbum = () => {
     }
 
     console.log("album data in useEffect : ", album_data);
+    console.log("album data in useEffect in album  : ", imageDetail);
+
+    const removeImage = async () => {
+        console.log("image id in remove image: ", imageDetail?.imageData.imageId)
+        console.log("album id in remove image: ", imageDetail?.imageData.album_id)
+        const result = await removeImageFromAlbum(imageDetail?.imageData.album_id, imageDetail?.imageData.imageId);
+
+        if (result) {
+            document.getElementById("show_image_modal").close();
+        }
+    }
 
     return (
         <div className='py-4 px-4 flex gap-4'>
@@ -68,16 +80,28 @@ const ImageDisplayAreaInAlbum = () => {
                         <img src={imageDetail?.imageData.url} alt={imageDetail?.imageData.name} className={`h-[${imageDetail?.imageData.height}px] w-[${imageDetail?.imageData.width}px]`} />
                     </div>
 
-                    <div className='flex flex-col gap-0.5'>
-                        <h2>
-                            Name: {showName(imageDetail?.imageData.name)}
-                        </h2>
-                        <span>
-                            Upload Time: {showTime(imageDetail?.imageData.createdAt)}
-                        </span>
-                        <span>
-                            Upload Date: {showDate(imageDetail?.imageData.createdAt)}
-                        </span>
+                    <div className='flex flex-col justify-between'>
+                        <div className='flex flex-col gap-0.5'>
+                            <h2>
+                                Name: {showName(imageDetail?.imageData.name)}
+                            </h2>
+                            <span>
+                                Upload Time: {showTime(imageDetail?.imageData.createdAt)}
+                            </span>
+                            <span>
+                                Upload Date: {showDate(imageDetail?.imageData.createdAt)}
+                            </span>
+                        </div>
+                        {/* to remove image from album */}
+                        <div className='flex items-center justify-end'>
+                            <button className='btn btn-error' onClick={removeImage}>
+                                {isRemovingImage ? (
+                                    <Loader2 className='w-4 animate-spin' />
+                                ) : (
+                                    "Remove"
+                                )}
+                            </button>
+                        </div>
                     </div>
                 </div>
 

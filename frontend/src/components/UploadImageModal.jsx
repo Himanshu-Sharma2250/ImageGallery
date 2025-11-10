@@ -17,6 +17,10 @@ const UploadImageModal = () => {
         formData.append('image', file); 
         
         const result = await upload(formData);
+
+        if (result) {
+            document.getElementById("my_modal_2").close();
+        }
     }
 
     console.log("IMage detail : ", uploadedImageDetail);

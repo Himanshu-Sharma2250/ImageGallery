@@ -10,6 +10,7 @@ export const useAlbumStore = create((set) => ({
     isGettingAlbum: false,
     isDeletingAlbum: false,
     isAddingImageInAlbum: false,
+    isRemovingImage: false,
 
     createAlbum: async (body) => {
         set({isCreatingAlbum: true});
@@ -84,6 +85,23 @@ export const useAlbumStore = create((set) => ({
             return false;
         } finally {
             set({isAddingImageInAlbum: false});
+        }
+    },
+
+    removeImageFromAlbum: async (album_id, imageId) => {
+        set({isRemovingImage: true});
+
+        try {
+            const response = await axiosInstance.patch(`album/${album_id}/remove-image/${imageId}`);
+            set({albumDetail: response.data});
+
+            return true;
+        } catch (error) {
+            console.error("Error removing image from album: ", error);
+
+            return false;
+        } finally {
+            set({isRemovingImage: false});
         }
     },
 
