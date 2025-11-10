@@ -29,8 +29,7 @@ const imageSchema = new Schema({
     },
     album_id: {
         type: Schema.Types.ObjectId,
-        ref: "Album",
-        unique: true
+        ref: "Album"
     }
 }, {timestamps: true});
 

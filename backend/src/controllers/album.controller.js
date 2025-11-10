@@ -196,6 +196,54 @@ export const addImagesInAlbum = async (req, res) => {
     }
 }; 
 
+export const removeImageFromAlbum = async (req, res) => {
+    const {album_id, imageId} = req.params;
+
+    if (!album_id || !imageId) {
+        return res.status(400).json({
+            message: "album_id or imageId is not present"
+        })
+    }
+
+    try {
+        const album = await Album.findById(album_id);
+
+        if (!album) {
+            return res.status(404).json({
+                success: false,
+                message: "Album not found"
+            })
+        }
+
+        const image = await Image.findById(imageId);
+
+        if (!image) {
+            return res.status(404).json({
+                success: false,
+                message: "Image not found"
+            })
+        }
+
+        await Album.findByIdAndUpdate(album_id, {
+            $pull: {
+                images: imageId
+            }
+        })
+
+        res.status(200).json({
+            success: true,
+            message: "Image removed successfully",
+            album_data: album
+        })
+    } catch (error) {
+        console.error("Error removing image from album: ", error);
+        res.status(500).json({
+            success: false,
+            message: "Error removing image from album"
+        })
+    }
+}
+
 export const deleteAlbum = async (req, res) => {
     const {album_id} = req.params;
 

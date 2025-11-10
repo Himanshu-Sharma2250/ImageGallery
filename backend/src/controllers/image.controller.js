@@ -1,4 +1,5 @@
 import { Image } from "../models/image.model.js";
+import { Album } from "../models/album.model.js";
 import { deleteImageFromCloudinary, uploadOnCloudinary } from "../utils/cloudinary.js";
 
 // 1. upload the image 
@@ -106,7 +107,7 @@ export const getImage = async (req, res) => {
                 width: image.width,
                 height: image.height,
                 format: image.format,
-                album_id: image.album_id | "",
+                album_id: image.album_id,
                 createdAt: image.createdAt
             }
         });
@@ -149,6 +150,8 @@ export const getAllImages = async (req, res) => {
 export const deleteImage = async (req, res) => {
     const {imageId} = req.params;
 
+    console.log("image id in delete image : ", imageId)
+
     if (!imageId) {
         return res.status(400).json({
             message: "Image id not found"
@@ -163,6 +166,15 @@ export const deleteImage = async (req, res) => {
                 success: false,
                 message: "Image not found"
             })
+        }
+
+        if (image.album_id !== 0) {
+            await Album.updateOne(
+                {_id: image.album_id},
+                {$pull: {
+                    images: imageId
+                }}
+            )
         }
 
         const deleteFromCloudinary = await deleteImageFromCloudinary(image.cloudinary_public_id);
