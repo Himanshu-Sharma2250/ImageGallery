@@ -3,11 +3,12 @@ import { useAlbumStore } from '../stores/useAlbumStore';
 import toast from 'react-hot-toast';
 import useImageStore from '../stores/useImageStore';
 import { Loader2 } from 'lucide-react';
+import DisplayImage from './DisplayImage';
 
 const ImageDisplayAreaInAlbum = () => {
-    const {albumDetail, getAlbum, removeImageFromAlbum, isRemovingImage} = useAlbumStore();
+    const {albumDetail, getAlbum} = useAlbumStore();
     const album_data = albumDetail?.album_data;
-    const {getImage, isGettingImage, imageDetail} = useImageStore();
+    const {getImage, imageDetail} = useImageStore();
 
     useEffect(() => {
         const fetchAlbumData = async () => {
@@ -28,7 +29,7 @@ const ImageDisplayAreaInAlbum = () => {
             toast.error("Unable to fetch image");
         }
 
-        document.getElementById("show_image_modal").showModal();
+        document.getElementById("display_image_modal").showModal();
     }
 
     const createImages = (image) => {
@@ -37,31 +38,6 @@ const ImageDisplayAreaInAlbum = () => {
                 <img src={image.image_url} className='h-40 w-32 rounded-xl' />
             </figure>
         </div>
-    }
-
-    const showDate = (date) => {
-        return date?.slice(0, -14);
-    }
-
-    const showTime = (time) => {
-        return time?.slice(11, -5);
-    }
-
-    const showName = (name) => {
-        return name?.slice(0, -4);
-    }
-
-    console.log("album data in useEffect : ", album_data);
-    console.log("album data in useEffect in album  : ", imageDetail);
-
-    const removeImage = async () => {
-        console.log("image id in remove image: ", imageDetail?.imageData.imageId)
-        console.log("album id in remove image: ", imageDetail?.imageData.album_id)
-        const result = await removeImageFromAlbum(imageDetail?.imageData.album_id, imageDetail?.imageData.imageId);
-
-        if (result) {
-            document.getElementById("show_image_modal").close();
-        }
     }
 
     return (
@@ -74,41 +50,7 @@ const ImageDisplayAreaInAlbum = () => {
                 album_data?.images.map(image => createImages(image))
             )}
             {/* modal that show the full image and its detail */}
-            <dialog id="show_image_modal" className="modal">
-                <div className="modal-box w-11/12 max-w-5xl flex gap-1.5 p-2.5">
-                    <div className=''>
-                        <img src={imageDetail?.imageData.url} alt={imageDetail?.imageData.name} className={`h-[${imageDetail?.imageData.height}px] w-[${imageDetail?.imageData.width}px]`} />
-                    </div>
-
-                    <div className='flex flex-col justify-between'>
-                        <div className='flex flex-col gap-0.5'>
-                            <h2>
-                                Name: {showName(imageDetail?.imageData.name)}
-                            </h2>
-                            <span>
-                                Upload Time: {showTime(imageDetail?.imageData.createdAt)}
-                            </span>
-                            <span>
-                                Upload Date: {showDate(imageDetail?.imageData.createdAt)}
-                            </span>
-                        </div>
-                        {/* to remove image from album */}
-                        <div className='flex items-center justify-end'>
-                            <button className='btn btn-error' onClick={removeImage}>
-                                {isRemovingImage ? (
-                                    <Loader2 className='w-4 animate-spin' />
-                                ) : (
-                                    "Remove"
-                                )}
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <form method="dialog" className="modal-backdrop">
-                    <button>close</button>
-                </form>
-            </dialog>
+            <DisplayImage image={imageDetail} inImageTab={false} />
         </div>
     )
 }
