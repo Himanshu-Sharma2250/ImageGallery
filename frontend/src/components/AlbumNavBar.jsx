@@ -9,8 +9,6 @@ const AlbumNavBar = () => {
 
     const navigate = useNavigate({ from: '/album/$id' });
 
-    console.log("album detail in other pafe: ", album_data);
-
     const delete_album = async () => {
         const albumId = album_data?._id;
         const result = await deleteAlbum(albumId);

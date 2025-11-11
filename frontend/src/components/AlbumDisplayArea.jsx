@@ -22,8 +22,6 @@ const AlbumDisplayArea = () => {
         fetchAlbums();
     }, [])
 
-    console.log("all album data in album display area : ", albums)
-
     const album = (album) => {
         // album = albums[0]=>object -> albums.albums
         return <div className='h-60 w-52 border-2 p-2 mr-5 rounded-xl cursor-pointer' key={album._id} data-key={album._id} onClick={clickOnAlbum}>
@@ -50,7 +48,6 @@ const AlbumDisplayArea = () => {
     const clickOnAlbum = async (e) => {
         const albumId = e.currentTarget.getAttribute('data-key');
         // console.log("album id : ", albumId);
-        console.log("i am clicking on album")
         const result = await getAlbum(albumId);
 
         if (result) {
@@ -58,7 +55,6 @@ const AlbumDisplayArea = () => {
         }
     }
     
-    console.log("Albums: ", albums);
     return (
         <div className=' flex '>
             {albums.length === 0 ? (

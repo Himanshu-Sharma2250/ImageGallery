@@ -6,8 +6,6 @@ import useImageStore from '../stores/useImageStore';
 import DisplayImage from './DisplayImage';
 
 const ImageDisplayArea = () => {
-    const [monthYear, setMonthYear] = useState(""); // will contain the month and year of the image that is uploaded
-
     const {images, isGettingAllImages, getAllImages, getImage, imageDetail} = useImageStore();
 
     useEffect(() => {

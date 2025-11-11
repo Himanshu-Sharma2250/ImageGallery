@@ -24,10 +24,7 @@ const CreateAlbumModal = () => {
         document.getElementById("albumForm").reset(); // to reset the default values of input to ""
 
         if (result) {
-            toast.success(`Album ${data.name} created successfully`);
-        }
-        else {
-            toast.error("Failed to create album");
+            document.getElementById('my_modal_1').close()
         }
     };
 

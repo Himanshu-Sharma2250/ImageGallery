@@ -19,7 +19,6 @@ export const useAlbumStore = create((set) => ({
             const response = await axiosInstance.post("album/create-album", body);
             set({createdAlbumDetail: response.data});
             
-            console.log("method called: ", response);
             return true;
         } catch (error) {
             console.error("Error creating album: ", error);
@@ -56,8 +55,6 @@ export const useAlbumStore = create((set) => ({
             const response = await axiosInstance.get("album/all-albums");
             set({albums: response.data.albums});
 
-            console.log("Albums data: ", response.data);
-
             return true;
         } catch (error) {
             console.error("Error getting all albums: ", error);
@@ -71,8 +68,6 @@ export const useAlbumStore = create((set) => ({
 
     addingImageInAlbum: async (imageIds, albumId) => {
         set({isAddingImageInAlbum: true});
-        console.log("image id : store: ", imageIds);
-        console.log("album id : store: ", albumId);
 
         try {
             const response = await axiosInstance.patch(`album/${albumId}/add-images`, {imageIds});

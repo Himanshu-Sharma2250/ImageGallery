@@ -33,7 +33,7 @@ const ImageDisplayAreaInAlbum = () => {
     }
 
     const createImages = (image) => {
-        return <div className='h-40 w-32 cursor-pointer' key={image.name} data-key={image._id} onClick={getImageDetail}>
+        return <div className='h-40 w-32 cursor-pointer' key={image._id} data-key={image._id} onClick={getImageDetail}>
             <figure className='h-40 w-32'>
                 <img src={image.image_url} className='h-40 w-32 rounded-xl' />
             </figure>

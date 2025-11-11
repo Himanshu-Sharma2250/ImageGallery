@@ -23,8 +23,6 @@ const UploadImageModal = () => {
         }
     }
 
-    console.log("IMage detail : ", uploadedImageDetail);
-
     return (
         <div className='w-fit'>
             <button className="btn rounded-xl" onClick={()=>document.getElementById('my_modal_2').showModal()}>Upload</button>

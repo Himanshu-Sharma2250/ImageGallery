@@ -27,9 +27,6 @@ const AddImagesInAlbumModal = (prop) => {
         // console.log("image is selected? ", isSelected);
         // console.log("Parent of input check : ", e.currentTarget) // div with key
 
-        console.log("images id map size: ", imageIdsMap.size);
-        console.log("images id map: ", imageIdsMap);
-
         if (isSelected) {
             const imageId = e.currentTarget.getAttribute('data-key');
             setImageIdsMap(prevMap => {
@@ -50,15 +47,10 @@ const AddImagesInAlbumModal = (prop) => {
     const addImagesInAlbum = async () => {
         const albumId = prop.albumData._id;
         const imageIds = Array.from(imageIdsMap.keys());
-        console.log("imageids type: ", typeof(imageIds));
         const result = await addingImageInAlbum(imageIds, albumId);
 
         if (result) {
-            console.log("after adding aimges: ", albumDetail);
-            toast.success("Images added to album successfully")
-        }
-        else {
-            toast.error("Failed to add images")
+            document.getElementById('my_modal_4').close();
         }
     }
 
