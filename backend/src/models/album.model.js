@@ -2,8 +2,8 @@ import mongoose, {Schema} from "mongoose";
 
 const albumSchema = new Schema({
     userId: {
-        type: Number,
-        default: 1,
+        type: String,
+        required: true
     },
     name: {
         type: String,

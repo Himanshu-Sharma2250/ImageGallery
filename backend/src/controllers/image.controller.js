@@ -34,6 +34,7 @@ export const uploadImage = async (req, res) => {
         }
 
         const new_image = await Image.create({
+            userId: req.user.id,
             name: req.file.originalname,
             cloudinary_public_id: imageDetail.public_id,
             image_url: imageDetail.secure_url,
@@ -59,6 +60,7 @@ export const uploadImage = async (req, res) => {
             success: true,
             message: "Image uploaded successfully",
             imageData: {
+                userId: req.user.id,
                 imageId: new_image._id,
                 name: req.file.originalname,
                 url: imageDetail.secure_url,
@@ -101,6 +103,7 @@ export const getImage = async (req, res) => {
             success: true,
             message: "Image found",
             imageData: {
+                userId: req.user.id,
                 imageId: image._id,
                 name: image.name,
                 url: image.image_url,
@@ -123,7 +126,7 @@ export const getImage = async (req, res) => {
 export const getAllImages = async (req, res) => {
     try {
         const images = await Image.find({
-            userId: 1
+            userId: req.user.id
         });
 
         if (images.length === 0) {
@@ -149,8 +152,6 @@ export const getAllImages = async (req, res) => {
 
 export const deleteImage = async (req, res) => {
     const {imageId} = req.params;
-
-    console.log("image id in delete image : ", imageId)
 
     if (!imageId) {
         return res.status(400).json({

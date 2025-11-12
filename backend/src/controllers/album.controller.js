@@ -14,7 +14,8 @@ export const createAlbum = async (req, res) => {
 
     try {
         const isAlbumExists = await Album.findOne({
-            name:name
+            userId: req.user.id,
+            name: name
         });
 
         if (isAlbumExists) {
@@ -25,14 +26,16 @@ export const createAlbum = async (req, res) => {
         }
 
         const album = await Album.create({
-            name:name,
-            description:description,
+            userId: req.user.id,
+            name: name,
+            description: description,
         })
 
         await album.save();
 
         const existingAlbum = await Album.findOne({
-            name:name
+            userId: req.user.id,
+            name: name
         });
 
         if (!existingAlbum) {
@@ -93,7 +96,7 @@ export const getAlbum = async (req, res) => {
 export const getAllAlbums = async (req, res) => {
     try {
         const albums = await Album.find({
-            userId: 1
+            userId: req.user.id,
         });
 
         if (albums.length === 0) {
