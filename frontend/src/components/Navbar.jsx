@@ -1,27 +1,45 @@
 import React from 'react'
 import CreateAlbumModal from './CreateAlbumModal';
 import UploadImageModal from './UploadImageModal';
+import { useAuthStore } from '../stores/useAuthStore';
+import { useNavigate } from '@tanstack/react-router';
+import { Loader2 } from 'lucide-react';
 
 const Navbar = () => {
-  return (
-    <div className="navbar bg-base-100 shadow-sm">
-        <div className="flex-none">
-            <button className="btn btn-square btn-ghost">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="inline-block h-5 w-5 stroke-current"> <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path> </svg>
-            </button>
-        </div>
-        <div className="flex-1">
-            <a className="btn btn-ghost text-xl">Image Gallery</a>
-        </div>
-        <div className="flex gap-1">
+    const {isLoggingOut, logout} = useAuthStore();
+    const navigate = useNavigate();
+
+    const logOut = async () => {
+        const result = await logout();
+
+        if (result) {
+            navigate({to:"/signin"});
+        }
+    }
+
+    return (
+        <div className="navbar bg-base-100 shadow-sm flex justify-between">
+            <div className="flex">
+                <a className="btn btn-ghost text-xl">Image Gallery</a>
+            </div>
+
+            <div className="flex gap-1">
+                
+                <CreateAlbumModal />
             
-            <CreateAlbumModal />
-           
-            <UploadImageModal />
-            
+                <UploadImageModal />
+
+                <button className='btn btn-error rounded-xl' onClick={logOut}>
+                    {isLoggingOut ? (
+                        <Loader2 className='w-4' />
+                    ) : (
+                        "Logout"
+                    )}
+                </button>
+                
+            </div>
         </div>
-    </div>
-  )
+    )
 }
 
 export default Navbar;

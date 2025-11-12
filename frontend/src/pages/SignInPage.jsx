@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Eye, EyeOff, Loader2 } from "lucide-react";
 import { z } from "zod";
 import {Link, useNavigate} from "@tanstack/react-router";
+import toast from "react-hot-toast";
 
 import { useAuthStore } from "../stores/useAuthStore";
 
