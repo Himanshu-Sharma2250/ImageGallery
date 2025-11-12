@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser";
 import connect_db from "./utils/db.js";
 import imageRouter from "./routes/image.route.js";
 import albumRouter from "./routes/album.route.js";
+import authRouter from "./routes/auth.route.js";
 
 dotenv.config();
 
@@ -33,5 +34,6 @@ app.listen(port, () => {
     console.log(`App listening on port ${port}`)
 });
 
+app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/image/", imageRouter);
 app.use("/api/v1/album", albumRouter);
