@@ -121,12 +121,18 @@ const DisplayImage = (prop) => {
                                 <div className='flex gap-4 items-center px-2'>
                                     <CalendarClock className='w-5' />
 
-                                    <div>
+                                    <div className='flex gap-1 items-center'>
                                         <span className='btn cursor-default'>
                                             {showTime(image?.createdAt)[0]}
                                         </span>
+                                        <span>
+                                            :
+                                        </span>
                                         <span className='btn cursor-default'>
                                             {showTime(image?.createdAt)[1]}
+                                        </span>
+                                        <span>
+                                            :
                                         </span>
                                         <span className='btn cursor-default'>
                                             {showTime(image?.createdAt)[2]}
