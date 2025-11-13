@@ -38,7 +38,7 @@ const SignUpPage = () => {
         try {
             const success = await signup(data);
             if (success) {
-                navigate({to:"/"});
+                navigate({to:"/signin", from:"/signup"});
             }
         } catch (error) {
             console.error("Sign up failed: ", error);
