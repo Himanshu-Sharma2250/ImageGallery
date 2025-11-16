@@ -29,7 +29,7 @@ const Navbar = () => {
             
                 <UploadImageModal />
 
-                <button className='btn btn-error rounded-xl btn-xs sm:btn-sm md:btn-md lg:btn-lg xl:btn-xl' onClick={logOut}>
+                <button className='btn btn-error rounded-xl btn-xs sm:btn-sm md:btn-md lg:btn-md xl:btn-md' onClick={logOut}>
                     {isLoggingOut ? (
                         <Loader2 className='w-4' />
                     ) : (

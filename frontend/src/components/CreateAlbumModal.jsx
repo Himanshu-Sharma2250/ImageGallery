@@ -30,7 +30,7 @@ const CreateAlbumModal = () => {
 
     return (
         <div className='w-fit'>
-            <button className="btn rounded-xl btn-xs sm:btn-sm md:btn-md lg:btn-lg xl:btn-xl" onClick={()=>document.getElementById('my_modal_1').showModal()}>
+            <button className="btn rounded-xl btn-xs sm:btn-sm md:btn-md lg:btn-md xl:btn-md" onClick={()=>document.getElementById('my_modal_1').showModal()}>
                 Create Album
             </button>
 
