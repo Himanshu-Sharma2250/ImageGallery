@@ -43,9 +43,9 @@ const DisplayImage = (prop) => {
     const showTime = (time) => {
         const utcDate = new Date(time);
         const new_time = utcDate.toLocaleString("en-IN", { timeZone: "Asia/Kolkata" });
-        const hour = new_time?.getHours();
-        const min = new_time?.getMinutes();
-        const sec = new_time?.getSeconds();
+        const hour = new_time?.slice(12,13);
+        const min = new_time?.slice(14,16);
+        const sec = new_time?.slice(17,19);
 
         return [hour, min, sec];
     }
