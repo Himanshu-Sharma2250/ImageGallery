@@ -41,10 +41,11 @@ const DisplayImage = (prop) => {
     }
 
     const showTime = (time) => {
-        const new_time = time?.slice(11, -5);
-        const hour = new_time?.slice(0, 2);
-        const min = new_time?.slice(3, 5);
-        const sec = new_time?.slice(-2);
+        const utcDate = new Date(time);
+        const new_time = utcDate.toLocaleString("en-IN", { timeZone: "Asia/Kolkata" });
+        const hour = new_time?.getHours();
+        const min = new_time?.getMinutes();
+        const sec = new_time?.getSeconds();
 
         return [hour, min, sec];
     }

@@ -25,7 +25,7 @@ const UploadImageModal = () => {
 
     return (
         <div className='w-fit'>
-            <button className="btn rounded-xl" onClick={()=>document.getElementById('my_modal_2').showModal()}>Upload</button>
+            <button className="btn rounded-xl btn-xs sm:btn-sm md:btn-md lg:btn-lg xl:btn-xl" onClick={()=>document.getElementById('my_modal_2').showModal()}>Upload</button>
 
             <dialog id="my_modal_2" className="modal">
                 <div className="modal-box">
