@@ -20,7 +20,7 @@ const Navbar = () => {
     return (
         <div className="navbar bg-base-100 shadow-sm flex justify-between">
             <div className="flex">
-                <a className="btn btn-ghost text-xl">Image Gallery</a>
+                <a className="btn btn-ghost text-xl">SnapVault</a>
             </div>
 
             <div className="flex gap-1">
