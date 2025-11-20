@@ -1,4 +1,4 @@
-# Image Gallery
+# SnapVault
 
 Image Gallery is a full-stack web application that allows users to upload images, create albums, and organize photos efficiently. It provides an intuitive interface for managing personal image collections with secure user authentication.
 
